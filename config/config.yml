@@ -1,0 +1,26 @@
+management:
+  port: 8000
+services:
+  - name: Kafka Mock Producer
+    type: kafka
+    address: kafka:9092
+    actors:
+      - name: scheduled-producer-1  # just the name
+        produce:
+          queue: scheduled-queue1  # topic/queue name
+          key: "message key, can be null"
+          value: "message value"
+          headers:
+            constant: justvalue
+            timestamp: '{{date.timestamp}}'  # regular Mockintosh templating can be used
+        delay: 5  # seconds between producing
+        limit: 100  # limit of how many messages to produce, optional
+  
+  - name: Kafka Mock Consumer
+    type: kafka
+    address: kafka:9092
+    actors:
+      - name: validate-consume-1
+        consume:
+          queue: scheduled-queue1 # topic/queue name to subscribe to, required
+          capture: 100  # limit len of messages to store for validation, optional, default: 1

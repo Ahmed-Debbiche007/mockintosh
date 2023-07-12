@@ -1,0 +1,195 @@
+{
+  "management": {
+    "port": 8000,
+    "ssl": true,
+    "sslCertFile": "cert.pem",
+    "sslKeyFile": "key.pem"
+  },
+  "templatingEngine": "Handlebars",
+  "services": [
+    {
+      "name": "Mock for Service1",
+      "hostname": "service1.example.com",
+      "port": 8001,
+      "managementRoot": "__admin",
+      "endpoints": [
+        {
+          "path": "/service1-multi-response-looped",
+          "response": [
+            "resp1",
+            "resp2",
+            "resp3"
+          ]
+        },
+        {
+          "path": "/service1-multi-response-looped-empty-list",
+          "response": []
+        },
+        {
+          "path": "/service1-no-response"
+        },
+        {
+          "path": "/service1-multi-response-nonlooped",
+          "multiResponsesLooped": false,
+          "response": [
+            "resp1",
+            "resp2",
+            "resp3"
+          ]
+        },
+        {
+          "path": "/service1-dataset-inline",
+          "dataset": [
+            {
+              "var1": "val1"
+            },
+            {
+              "var1": "val2"
+            },
+            {
+              "var1": "val3"
+            }
+          ],
+          "response": "dset: {{var1}}"
+        },
+        {
+          "path": "/service1-dataset-inline-nonlooped",
+          "datasetLooped": false,
+          "dataset": [
+            {
+              "var1": "val1"
+            },
+            {
+              "var1": "val2"
+            },
+            {
+              "var1": "val3"
+            }
+          ],
+          "response": "dset: {{var1}}"
+        },
+        {
+          "path": "/service1-dataset-fromfile",
+          "dataset": "@dataset.json",
+          "response": "dset: {{var1}}"
+        }
+      ]
+    },
+    {
+      "name": "Mock for Service2",
+      "hostname": "service2.example.com",
+      "port": 8002,
+      "managementRoot": "__admin",
+      "endpoints": [
+        {
+          "path": "/service2-multi-response-looped",
+          "response": [
+            "resp1",
+            "resp2",
+            "resp3"
+          ]
+        },
+        {
+          "path": "/service2-multi-response-nonlooped",
+          "multiResponsesLooped": false,
+          "response": [
+            "resp1",
+            "resp2",
+            "resp3"
+          ]
+        },
+        {
+          "path": "/service2-dataset-inline",
+          "dataset": [
+            {
+              "var1": "val1"
+            },
+            {
+              "var1": "val2"
+            },
+            {
+              "var1": "val3"
+            }
+          ],
+          "response": "dset: {{var1}}"
+        }
+      ]
+    },
+    {
+      "name": "Mock for Service3",
+      "port": 8003,
+      "managementRoot": "__admin",
+      "endpoints": [
+        {
+          "path": "/tagged-responses",
+          "response": [
+            {
+              "body": "3.1"
+            },
+            {
+              "tag": "first",
+              "body": "1.1"
+            },
+            {
+              "tag": "second",
+              "body": "2.1"
+            },
+            {
+              "tag": "first",
+              "body": "1.2"
+            },
+            {
+              "body": "3.2"
+            },
+            {
+              "tag": "second",
+              "body": "2.2"
+            },
+            {
+              "body": "3.3"
+            }
+          ]
+        },
+        {
+          "path": "/tagged-datasets",
+          "dataset": [
+            {
+              "var": "3.1"
+            },
+            {
+              "tag": "first",
+              "var": "1.1"
+            },
+            {
+              "tag": "second",
+              "var": "2.1"
+            },
+            {
+              "tag": "first",
+              "var": "1.2"
+            },
+            {
+              "var": "3.2"
+            },
+            {
+              "tag": "second",
+              "var": "2.2"
+            },
+            {
+              "var": "3.3"
+            }
+          ],
+          "response": "dset: {{var}}"
+        },
+        {
+          "path": "/tagged-confusing",
+          "response": [
+            {
+              "tag": "some"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

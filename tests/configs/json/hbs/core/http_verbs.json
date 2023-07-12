@@ -1,0 +1,61 @@
+{
+  "templatingEngine": "Handlebars",
+  "services": [
+    {
+      "name": "Mock for Service1",
+      "port": 8001,
+      "endpoints": [
+        {
+          "path": "/hello",
+          "method": "GET",
+          "response": "GET request"
+        },
+        {
+          "path": "/hello-lower",
+          "method": "get",
+          "response": "GET request"
+        },
+        {
+          "path": "/hello",
+          "method": "POST",
+          "response": "POST request"
+        },
+        {
+          "path": "/hello",
+          "method": "HEAD",
+          "response": "HEAD request"
+        },
+        {
+          "path": "/hello",
+          "method": "DELETE",
+          "response": "DELETE request"
+        },
+        {
+          "path": "/hello",
+          "method": "PATCH",
+          "response": "PATCH request"
+        },
+        {
+          "path": "/hello",
+          "method": "PUT",
+          "response": "PUT request"
+        },
+        {
+          "path": "/hello",
+          "method": "OPTIONS",
+          "response": "OPTIONS request"
+        },
+        {
+          "path": "/method-not-allowed-unless-get",
+          "method": "GET",
+          "response": "GET request"
+        },
+        {
+          "path": "/method-not-allowed-unless-post",
+          "method": "POST",
+          "response": "POST request"
+        }
+      ]
+    }
+  ]
+}

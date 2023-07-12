@@ -1,0 +1,26 @@
+name: Mock for Service1
+hostname: service1.example.com
+port: 8001
+managementRoot: __admin
+endpoints:
+- path: /service1
+  method: GET
+  response: service1
+- path: /service1-second/{{var}}
+  method: GET
+  response:
+    headers:
+      Content-Type: application/json; charset=UTF-8
+    status: 201
+    body: 'service1-second: {{var}}'
+- path: /service1-post
+  method: POST
+  response: service1
+- path: /service1-resource
+  method: POST
+  response:
+    body: '@templates/hello.json.hbs'
+- path: /service1-resource2
+  method: POST
+  response:
+    body: '@templates/hello2.json.hbs'

@@ -1,0 +1,34 @@
+---
+templatingEngine: Jinja2
+services:
+- name: Mock for Service1
+  hostname: service1.example.com
+  port: 8001
+  endpoints:
+  - path: "/users"
+    method: GET
+    response:
+      headers:
+        Content-Type: "application/json; charset=UTF-8"
+      useTemplating: true
+      body: "@templates/users.json.j2"
+  - path: "/users/{{ id }}"
+    method: GET
+    response:
+      headers:
+        Content-Type: "application/json; charset=UTF-8"
+      useTemplating: true
+      body: "@templates/user.json.j2"
+- name: Mock for Service2
+  hostname: service2.example.com
+  port: 8002
+  endpoints:
+  - path: "/companies"
+    method: POST
+    response:
+      headers:
+        Content-Type: "application/json; charset=UTF-8"
+      useTemplating: true
+      body: "@templates/companies.json.j2"
+- name: Service with no endpoints, for bare interceptors
+  port: 8003

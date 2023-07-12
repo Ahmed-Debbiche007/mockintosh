@@ -1,0 +1,202 @@
+{
+  "templatingEngine": "Handlebars",
+  "services": [
+    {
+      "name": "Mock for Service1",
+      "port": 8001,
+      "endpoints": [
+        {
+          "path": "/parameterized1/text/{{intoVar}}/subval",
+          "response": "intoVar capture: {{intoVar}}"
+        },
+        {
+          "path": "/parameterized1/template-file/{{intoVar}}/subval",
+          "response": {
+            "headers": {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            "body": "@templates/1.json.hbs"
+          }
+        },
+        {
+          "path": "/parameterized1/text/staticVal/subval",
+          "response": "static path components have priority"
+        },
+        {
+          "path": "/parameterized2/text/{{regEx 'prefix-.*'}}/subval",
+          "response": "regex match: {{request.path}} {{request.path.3}}"
+        },
+        {
+          "path": "/parameterized2/template-file/{{regEx 'prefix-.*'}}/subval",
+          "response": {
+            "headers": {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            "body": "@templates/2.json.hbs"
+          }
+        },
+        {
+          "path": "/parameterized1/text/{{regEx 'prefix2-([^/]+)' 'varname'}}/subval2",
+          "response": "regex capture group: {{varname}}"
+        },
+        {
+          "path": "/parameterized1/template-file/{{regEx 'prefix2-([^/]+)' 'varname'}}/subval2",
+          "response": {
+            "headers": {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            "body": "@templates/3.json.hbs"
+          }
+        },
+        {
+          "path": "/parameterized3/text/{{var1}}/{{var2}}/{{var3}}",
+          "response": "var1: {{var1}}, var2: {{var2}}, var3: {{var3}}"
+        },
+        {
+          "path": "/parameterized3/template-file/{{var1}}/{{var2}}/{{var3}}",
+          "response": {
+            "headers": {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            "body": "@templates/4.json.hbs"
+          }
+        },
+        {
+          "path": "/parameterized4/text/{{regEx 'prefix-(.*)-(.*)-(.*)-suffix' 'var1' 'var2' 'var3'}}/{{regEx '(.*)_(.*)' 'var4' 'var5'}}",
+          "response": "var1: {{var1}}, var2: {{var2}}, var3: {{var3}}, var4: {{var4}}, var5: {{var5}}"
+        },
+        {
+          "path": "/parameterized4/template-file/{{regEx 'prefix-(.*)-(.*)-(.*)-suffix' 'var1' 'var2' 'var3'}}/{{regEx '(.*)_(.*)' 'var4' 'var5'}}",
+          "response": {
+            "headers": {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            "body": "@templates/5.json.hbs"
+          }
+        },
+        {
+          "path": "/parameterized5/text/{{var1}}/{{regEx 'prefix-(.*)-(.*)-suffix' 'var2' 'var3'}}/{{var4}}/{{regEx 'prefix2-(.*)' 'var5'}}",
+          "response": "var1: {{var1}}, var2: {{var2}}, var3: {{var3}}, var4: {{var4}}, var5: {{var5}}"
+        },
+        {
+          "path": "/parameterized5/template-file/{{var1}}/{{regEx 'prefix-(.*)-(.*)-suffix' 'var2' 'var3'}}/{{var4}}/{{regEx 'prefix2-(.*)' 'var5'}}",
+          "response": {
+            "headers": {
+              "Content-Type": "application/json; charset=UTF-8"
+            },
+            "body": "@templates/5.json.hbs"
+          }
+        },
+        {
+          "method": "delete",
+          "path": "/carts/{{customerId}}",
+          "response": {
+            "status": 202
+          }
+        },
+        {
+          "method": "post",
+          "path": "/carts/{{customerId}}/items",
+          "response": {
+            "body": "{\n \"id\": \"L8VEqJRB4R\",\n \"itemId\": \"{{request.body}}\",\n \"quantity\": 1,\n \"unitPrice\": 12.0\n}",
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "status": 201
+          }
+        },
+        {
+          "path": "/carts/{{customerId}}/merge",
+          "response": {
+            "status": 202
+          }
+        },
+        {
+          "path": "/carts/{{customerId}}/items",
+          "response": {
+            "body": "[]",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+          }
+        },
+        {
+          "method": "patch",
+          "path": "/carts/{{customerId}}/items",
+          "response": {
+            "status": 202
+          }
+        },
+        {
+          "method": "delete",
+          "path": "/carts/{{customerId}}/items/{{itemId}}",
+          "response": {
+            "status": 202
+          }
+        },
+        {
+          "path": "/hello-{{somevar}}/another",
+          "method": "GET",
+          "response": "result: {{somevar}}"
+        },
+        {
+          "path": "/{{somevar1}}-middle-{{somevar2}}/another",
+          "method": "GET",
+          "response": "result: {{somevar1}} {{somevar2}}"
+        },
+        {
+          "path": "/{{somevar1}}-middle2-{{regEx '\\d'}}/another",
+          "method": "GET",
+          "response": "result: {{somevar1}}"
+        },
+        {
+          "path": "/hello2-{{regEx 'prefix-(.*)' 'somevar'}}/another",
+          "method": "GET",
+          "response": "result: {{somevar}}"
+        },
+        {
+          "path": "/search?q={{keyword}}",
+          "method": "GET",
+          "response": "result: {{keyword}}"
+        },
+        {
+          "path": "/search2?q={{keyword1}}&s={{keyword2}}",
+          "method": "GET",
+          "response": "result: {{keyword1}} {{keyword2}}"
+        },
+        {
+          "path": "/{{regEx 'abc1-xx(.*?)xx' 'keyword'}}",
+          "method": "GET",
+          "response": "result: {{keyword}}"
+        },
+        {
+          "path": "/{{regEx 'abc2-xx(.*?)xx' 'keyword1'}}?q={{keyword2}}&s={{keyword3}}",
+          "method": "GET",
+          "response": "result: {{keyword1}} {{keyword2}} {{keyword3}}"
+        },
+        {
+          "path": "/{{regEx 'abc3-xx(.*?)xx' 'keyword1'}}?q={{regEx 'abc4-xx(.*?)xx' 'keyword2'}}&s={{keyword3}}",
+          "method": "GET",
+          "response": "result: {{keyword1}} {{keyword2}} {{keyword3}}"
+        },
+        {
+          "path": "/{{regEx 'abc5-xx(.*?)xx' 'keyword1'}}?q={{keyword2}}&s={{keyword3}}#some-string",
+          "method": "GET",
+          "response": "result: {{keyword1}} {{keyword2}} {{keyword3}}"
+        },
+        {
+          "path": "/qstr-multiparam1?param[]={{val1}}&param[]={{val2}}",
+          "response": "{{val1}} {{val2}}"
+        },
+        {
+          "path": "/qstr-multiparam2?param1={{val1}}&param2={{val2}}",
+          "response": "{{val1}} {{val2}}"
+        },
+        {
+          "path": "/qstr-multiparam3?prefix-{{data}}-suffix",
+          "response": "{{data}}"
+        }
+      ]
+    }
+  ]
+}

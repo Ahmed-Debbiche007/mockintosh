@@ -10,6 +10,8 @@ import copy
 import logging
 import os
 import threading
+import datetime
+import time
 from os import environ
 
 from faker import Faker
@@ -101,6 +103,9 @@ class RenderingTask:
 
         try:
             ast = env.parse(self.text)
+            env.globals['now'] = datetime.datetime.utcnow
+            env.globals['timestamp'] = time.time()
+            
             if self.fill_undefineds_with is not None:
                 for var in find_undeclared_variables_in_order(ast):
                     env.globals[var] = self.fill_undefineds_with

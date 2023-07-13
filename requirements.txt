@@ -8,7 +8,7 @@ pybars4>=0.9.11
 accept-types==0.4.1
 jsonpath-ng==1.5.2
 httpx==0.23.0
-confluent-kafka>=1.6.1
+confluent-kafka==2.1.1
 prance[osv]>=0.21.2
 pika>=1.2.0
 PyRSMQ>=0.4.5
